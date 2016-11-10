@@ -58,7 +58,7 @@ model.removeLocalStorage = function() {
  */
 model.getPosts = function() {
 
-  var posts = model.getLocalStorage();
+  var posts = model.getLocalStorage()['posts'];
   return posts;
 
 }
@@ -72,13 +72,51 @@ model.getPosts = function() {
  */
 model.getPost = function( slug ) {
 
-  var posts = model.getLocalStorage();
+  var posts = model.getLocalStorage()['posts'];
 
   for ( var i = 0, numPosts = posts.length; i < numPosts; i++ ) {
 
     if ( slug === posts[i].slug ) {
 
       return posts[i];
+
+    }
+
+  }
+
+  return null;
+
+};
+
+
+/**
+ * Get all pages from local storage
+ *
+ * @return {object} pages - Object containing all pages
+ */
+model.getPages = function() {
+
+  var pages = model.getLocalStorage()['pages'];
+  return pages;
+
+}
+
+
+/**
+ * Get single page object from corresponding slug
+ *
+ * @param  {string} slug - Page slug
+ * @return {object} page - Page object
+ */
+model.getPage = function( slug ) {
+
+  var pages = model.getLocalStorage()['pages'];
+
+  for ( var i = 0, numPosts = pages.length; i < numPosts; i++ ) {
+
+    if ( slug === pages[i].slug ) {
+
+      return pages[i];
 
     }
 
