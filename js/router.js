@@ -31,10 +31,9 @@ router.getSlug = function() {
 
   if ( '' === slug ) {
 
-    return null;
+    return 'home';
 
-  }
-  else {
+  } else {
 
     return slug.substring( 1 );
 
