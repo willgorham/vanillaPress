@@ -20,7 +20,8 @@ view.showPosts = function() {
   var posts = model.getContents('posts'),
       postsFrag = document.createDocumentFragment(),
       postsWrapper = document.createElement( 'div' ),
-      pageContent = helpers.getPageContent();
+      pageContent = helpers.getPageContent(),
+      pageTitle = helpers.getPageTitle();
 
   for ( var i = 0, max = posts.length; i < max; i++ ) {
 
@@ -31,6 +32,7 @@ view.showPosts = function() {
   postsWrapper.id = 'blogPosts';
   postsFrag.appendChild( postsWrapper );
   pageContent.appendChild( postsFrag );
+  pageTitle.innerHTML = 'Blog Posts';
 
 };
 
@@ -76,6 +78,21 @@ view.buildPost = function( post ) {
   return articleEl;
 
 };
+
+
+/**
+ * Create main menu links for pages
+ *
+ */
+view.createMainMenu = function() {
+
+  var pages = getContents( 'pages' ),
+      menuFrag = document.createDocumentFragment(),
+      menuEl = helpers.getMainMenu();
+
+
+
+}
 
 
 /**

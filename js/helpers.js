@@ -12,7 +12,7 @@ var helpers = {};
 /**
  * Get DOM element containing page title
  *
- * @return {object} pageTitle - Page title element
+ * @return {object} pageTitle - Page title DOM element
  */
 helpers.getPageTitle = function() {
 
@@ -24,10 +24,22 @@ helpers.getPageTitle = function() {
 /**
  * Get DOM element containing page content
  *
- * @return {object} pageContent - Page content element
+ * @return {object} pageContent - Page content DOM element
  */
 helpers.getPageContent = function() {
 
   return document.getElementById( 'pageContent' );
+
+}
+
+
+/**
+ * Get DOM element containing main menu
+ *
+ * @return {object} mainMenu - Main menu DOM element
+ */
+helpers.getMainMenu = function() {
+
+  return document.querySelector( '#mainNav ul' );
 
 }
