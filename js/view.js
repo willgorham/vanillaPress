@@ -1,14 +1,20 @@
-//
-//
-//
-//
+/**
+ * View file for displaying content
+ */
+
+/**
+ * The main view object.
+ *
+ */
 var view = {};
 
-view.init = function() {
-
-};
+view.init = function() {};
 
 
+/**
+ * Get and display all posts
+ *
+ */
 view.showPosts = function() {
 
   var posts = model.getPosts(),
@@ -29,6 +35,11 @@ view.showPosts = function() {
 };
 
 
+/**
+ * Get and display a single post
+ *
+ * @param  {object} slug - Slug of post to show
+ */
 view.showPost = function( slug ) {
 
   var post = model.getPost( slug ),
@@ -41,6 +52,12 @@ view.showPost = function( slug ) {
 };
 
 
+/**
+ * Build HTML markup for single post
+ *
+ * @param  {object} post - Post object to use
+ * @return {object} articleEl - Document object with formatted post content
+ */
 view.buildPost = function( post ) {
 
   var articleEl = document.createElement('article'),
@@ -61,6 +78,10 @@ view.buildPost = function( post ) {
 };
 
 
+/**
+ * Clear page title and content
+ *
+ */
 view.clearContent = function() {
 
   var titleEl = helpers.getPageTitle(),

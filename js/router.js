@@ -1,17 +1,28 @@
-//
-//
-//
-//
+/**
+ * Router file for controlling model-view connections
+ */
+
+/**
+ * The main router object.
+ *
+ */
 var router = {};
 
 router.init = function() {
 
+  // Load initial page content
   router.loadContent();
+  // Listen for URL changes
   router.listenPageChange();
 
 };
 
 
+/**
+ * Get slug hash from URL
+ *
+ * @return {string} slug - Hash value
+ */
 router.getSlug = function() {
 
   var slug = window.location.hash;
@@ -32,6 +43,10 @@ router.getSlug = function() {
 };
 
 
+/**
+ * Listen for URL changes
+ *
+ */
 router.listenPageChange = function() {
 
   window.addEventListener( 'hashchange', router.loadContent, false );
@@ -39,6 +54,10 @@ router.listenPageChange = function() {
 };
 
 
+/**
+ * Show all posts or single post content based on page URL
+ *
+ */
 router.loadContent = function() {
 
   var slug = router.getSlug();
