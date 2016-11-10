@@ -19,18 +19,15 @@ view.showPosts = function() {
 
   var posts = model.getContents('posts'),
       postsFrag = document.createDocumentFragment(),
-      postsWrapper = document.createElement( 'div' ),
       pageContent = helpers.getPageContent(),
       pageTitle = helpers.getPageTitle();
 
   for ( var i = 0, max = posts.length; i < max; i++ ) {
 
-    postsWrapper.appendChild( view.buildPost( posts[i] ) );
+    postsFrag.appendChild( view.buildPost( posts[i] ) );
 
   }
 
-  postsWrapper.id = 'blogPosts';
-  postsFrag.appendChild( postsWrapper );
   pageContent.appendChild( postsFrag );
   pageTitle.innerHTML = 'Blog Posts';
 
