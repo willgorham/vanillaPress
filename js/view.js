@@ -17,7 +17,7 @@ view.init = function() {};
  */
 view.showPosts = function() {
 
-  var posts = model.getPosts(),
+  var posts = model.getContents('posts'),
       postsFrag = document.createDocumentFragment(),
       postsWrapper = document.createElement( 'div' ),
       pageContent = helpers.getPageContent();
@@ -42,7 +42,7 @@ view.showPosts = function() {
  */
 view.showPost = function( slug ) {
 
-  var post = model.getPost( slug ),
+  var post = model.getContent( 'posts', slug ),
       titleEl = helpers.getPageTitle(),
       contentEl = helpers.getPageContent();
 
@@ -69,7 +69,7 @@ view.buildPost = function( post ) {
   aEl.setAttribute( 'href', '#' + post.slug );
   aEl.appendChild( titleText );
   titleEl.appendChild( aEl );
-  divEl.innerHTML = post.content;
+  divEl.appendChild( document.createTextNode( post.content ) );
   articleEl.appendChild( titleEl );
   articleEl.appendChild( divEl );
 

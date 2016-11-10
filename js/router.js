@@ -31,7 +31,7 @@ router.getSlug = function() {
 
   if ( '' === slug ) {
 
-    return 'home';
+    return null;
 
   } else {
 
@@ -61,7 +61,7 @@ router.loadContent = function() {
 
   var slug = router.getSlug();
 
-  if ( 'blog' === slug ) {
+  if ( null === slug ) {
 
     view.showPosts();
 

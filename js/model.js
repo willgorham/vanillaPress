@@ -57,7 +57,7 @@ model.removeLocalStorage = function() {
  * @param {string} contentType - Content type to query
  * @return {object[]} contents - Array of all contents of type contentType
  */
-model.getContent = function( contentType ) {
+model.getContents = function( contentType ) {
 
   var contents = model.getLocalStorage()[contentType];
   return contents;
@@ -72,7 +72,7 @@ model.getContent = function( contentType ) {
  * @param  {string} slug - Content slug
  * @return {object} content - Content object
  */
-model.getSingleContent = function( contentType, slug ) {
+model.getContent = function( contentType, slug ) {
 
   var contents = model.getLocalStorage()[contentType];
 
