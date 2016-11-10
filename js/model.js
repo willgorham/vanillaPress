@@ -11,7 +11,7 @@ var model = {};
 model.init = function() {
 
   // Initialize data in local storage
-  model.setLocalStorage( jsonData );
+  model.setLocalStorage( data );
 
 };
 
@@ -19,11 +19,11 @@ model.init = function() {
 /**
  * Set data to local storage
  *
- * @param {string} data - JSON string of all site data
+ * @param {object} data - Data to store
  */
 model.setLocalStorage = function( data ) {
 
-  localStorage.setItem( 'vanillaPress', data );
+  localStorage.setItem( 'vanillaPress', JSON.stringify( data ) );
 
 };
 
@@ -52,71 +52,35 @@ model.removeLocalStorage = function() {
 
 
 /**
- * Get all posts from local storage
+ * Get all content of designated type from local storage
  *
- * @return {object} posts - Object containing all posts
+ * @param {string} contentType - Content type to query
+ * @return {object[]} contents - Array of all contents of type contentType
  */
-model.getPosts = function() {
+model.getContent = function( contentType ) {
 
-  var posts = model.getLocalStorage()['posts'];
-  return posts;
+  var contents = model.getLocalStorage()[contentType];
+  return contents;
 
 }
 
 
 /**
- * Get single post object from corresponding slug
+ * Get single content object from corresponding slug
  *
- * @param  {string} slug - Post slug
- * @return {object} post - Post object
+ * @param  {string} contentType - Content type to query
+ * @param  {string} slug - Content slug
+ * @return {object} content - Content object
  */
-model.getPost = function( slug ) {
+model.getSingleContent = function( contentType, slug ) {
 
-  var posts = model.getLocalStorage()['posts'];
+  var contents = model.getLocalStorage()[contentType];
 
-  for ( var i = 0, numPosts = posts.length; i < numPosts; i++ ) {
+  for ( var i = 0, max = contents.length; i < max; i++ ) {
 
-    if ( slug === posts[i].slug ) {
+    if ( slug === contents[i].slug ) {
 
-      return posts[i];
-
-    }
-
-  }
-
-  return null;
-
-};
-
-
-/**
- * Get all pages from local storage
- *
- * @return {object} pages - Object containing all pages
- */
-model.getPages = function() {
-
-  var pages = model.getLocalStorage()['pages'];
-  return pages;
-
-}
-
-
-/**
- * Get single page object from corresponding slug
- *
- * @param  {string} slug - Page slug
- * @return {object} page - Page object
- */
-model.getPage = function( slug ) {
-
-  var pages = model.getLocalStorage()['pages'];
-
-  for ( var i = 0, numPosts = pages.length; i < numPosts; i++ ) {
-
-    if ( slug === pages[i].slug ) {
-
-      return pages[i];
+      return contents[i];
 
     }
 
