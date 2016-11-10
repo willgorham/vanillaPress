@@ -61,7 +61,7 @@ router.loadContent = function() {
 
   var slug = router.getSlug();
 
-  if ( null === slug ) {
+  if ( 'blog' === slug ) {
 
     view.showPosts();
 
