@@ -63,11 +63,15 @@ router.loadContent = function() {
 
   if ( null === slug ) {
 
+    view.showContent( 'home' );
+
+  } else if ( 'blog' === slug ) {
+
     view.showPosts();
 
   } else {
 
-    view.showPost( slug );
+    view.showContent( slug );
 
   }
 

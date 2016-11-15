@@ -39,18 +39,29 @@ view.showPosts = function() {
 
 
 /**
- * Get and display a single post
+ * Get and display a single content item
  *
- * @param  {object} slug - Slug of post to show
+ * @param  {object} slug - Slug of content to show
  */
-view.showPost = function( slug ) {
+view.showContent = function( slug ) {
 
-  var post = model.getContent( 'posts', slug ),
+  var contentObj = model.getContent( 'posts', slug ),
       titleEl = helpers.getPageTitle(),
       contentEl = helpers.getPageContent();
 
-  titleEl.innerHTML = post.title;
-  contentEl.innerHTML = post.content;
+  if ( null === contentObj ) {
+    contentObj = model.getContent( 'pages', slug );
+  }
+
+  if ( null === contentObj ) {
+    contentObj = {
+      title: '404 Error',
+      content: 'Page not found'
+    };
+  }
+
+  titleEl.innerHTML = contentObj.title;
+  contentEl.innerHTML = contentObj.content;
 
 };
 
