@@ -8,7 +8,11 @@
  */
 var view = {};
 
-view.init = function() {};
+view.init = function() {
+
+  view.showMainMenu();
+
+};
 
 
 /**
@@ -81,15 +85,21 @@ view.buildPost = function( post ) {
  * Create main menu links for pages
  *
  */
-view.createMainMenu = function() {
+view.showMainMenu = function() {
 
-  var pages = getContents( 'pages' ),
+  var pages = model.getContents( 'pages' ),
       menuFrag = document.createDocumentFragment(),
       menuEl = helpers.getMainMenu();
 
+  for ( var i = 0, max = pages.length; i < max; i++ ) {
 
+    menuFrag.appendChild( helpers.buildMenuItem( pages[i] ) );
 
-}
+  }
+
+  menuEl.appendChild( menuFrag );
+
+};
 
 
 /**
