@@ -11,7 +11,7 @@ var model = {};
 model.init = function() {
 
   // Initialize data in local storage
-  model.setLocalStorage( jsonData );
+  model.setLocalStorage( data );
 
 };
 
@@ -19,11 +19,11 @@ model.init = function() {
 /**
  * Set data to local storage
  *
- * @param {string} data - JSON string of all site data
+ * @param {object} data - Data to store
  */
 model.setLocalStorage = function( data ) {
 
-  localStorage.setItem( 'vanillaPress', data );
+  localStorage.setItem( 'vanillaPress', JSON.stringify( data ) );
 
 };
 
@@ -52,33 +52,35 @@ model.removeLocalStorage = function() {
 
 
 /**
- * Get all posts from local storage
+ * Get all content of designated type from local storage
  *
- * @return {object} posts - Object containing all posts
+ * @param {string} contentType - Content type to query
+ * @return {object[]} contents - Array of all contents of type contentType
  */
-model.getPosts = function() {
+model.getContents = function( contentType ) {
 
-  var posts = model.getLocalStorage();
-  return posts;
+  var contents = model.getLocalStorage()[contentType];
+  return contents;
 
 }
 
 
 /**
- * Get single post object from corresponding slug
+ * Get single content object from corresponding slug and content type
  *
- * @param  {string} slug - Post slug
- * @return {object} post - Post object
+ * @param  {string} contentType - Content type to query
+ * @param  {string} slug - Content slug
+ * @return {object} content - Content object
  */
-model.getPost = function( slug ) {
+model.getContent = function( contentType, slug ) {
 
-  var posts = model.getLocalStorage();
+  var contents = model.getLocalStorage()[contentType];
 
-  for ( var i = 0, numPosts = posts.length; i < numPosts; i++ ) {
+  for ( var i = 0, max = contents.length; i < max; i++ ) {
 
-    if ( slug === posts[i].slug ) {
+    if ( slug === contents[i].slug ) {
 
-      return posts[i];
+      return contents[i];
 
     }
 
@@ -87,3 +89,75 @@ model.getPost = function( slug ) {
   return null;
 
 };
+
+/**
+ * Get single content object from corresponding slug
+ *
+ * @param  {string} slug - Content slug
+ * @return {object} content - Content object
+ */
+model.getContentBySlug = function( slug ) {
+
+  var contentObj = model.getContent( 'posts', slug );
+
+  if ( null === contentObj ) {
+
+    contentObj = model.getContent( 'pages', slug );
+
+  }
+
+  return contentObj;
+
+};
+
+
+/**
+ * Get content title from slug
+ *
+ * @param  {string} slug - Content URL slug
+ * @return {string} title - Content title
+ */
+model.getContentTitle = function( slug ) {
+
+  var title,
+      contentObj = model.getContentBySlug( slug );
+
+  if ( null === contentObj ) {
+
+    title = '404 Error';
+
+  } else {
+
+    title = contentObj.title;
+
+  }
+
+  return title;
+
+}
+
+
+/**
+ * Get content text from slug
+ *
+ * @param  {string} slug - Content URL slug
+ * @return {string} text - Content body text
+ */
+model.getContentText = function( slug ) {
+
+  var text,
+      contentObj = model.getContentBySlug( slug );
+
+  if ( null === contentObj ) {
+
+    text = 'Not Found';
+
+  } else {
+
+    text = contentObj.content;
+
+  }
+
+  return text;
+
+}

@@ -33,8 +33,7 @@ router.getSlug = function() {
 
     return null;
 
-  }
-  else {
+  } else {
 
     return slug.substring( 1 );
 
@@ -64,11 +63,15 @@ router.loadContent = function() {
 
   if ( null === slug ) {
 
+    view.showContent( 'home' );
+
+  } else if ( 'blog' === slug ) {
+
     view.showPosts();
 
   } else {
 
-    view.showPost( slug );
+    view.showContent( slug );
 
   }
 

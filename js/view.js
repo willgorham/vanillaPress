@@ -8,7 +8,11 @@
  */
 var view = {};
 
-view.init = function() {};
+view.init = function() {
+
+  view.showMainMenu();
+
+};
 
 
 /**
@@ -17,37 +21,35 @@ view.init = function() {};
  */
 view.showPosts = function() {
 
-  var posts = model.getPosts(),
+  var posts = model.getContents('posts'),
       postsFrag = document.createDocumentFragment(),
-      postsWrapper = document.createElement( 'div' ),
-      pageContent = helpers.getPageContent();
+      pageContent = helpers.getPageContent(),
+      pageTitle = helpers.getPageTitle();
 
   for ( var i = 0, max = posts.length; i < max; i++ ) {
 
-    postsWrapper.appendChild( view.buildPost( posts[i] ) );
+    postsFrag.appendChild( view.buildPost( posts[i] ) );
 
   }
 
-  postsWrapper.id = 'blogPosts';
-  postsFrag.appendChild( postsWrapper );
   pageContent.appendChild( postsFrag );
+  pageTitle.innerHTML = 'Blog Posts';
 
 };
 
 
 /**
- * Get and display a single post
+ * Get and display a single content item
  *
- * @param  {object} slug - Slug of post to show
+ * @param  {object} slug - Slug of content to show
  */
-view.showPost = function( slug ) {
+view.showContent = function( slug ) {
 
-  var post = model.getPost( slug ),
-      titleEl = helpers.getPageTitle(),
+  var titleEl = helpers.getPageTitle(),
       contentEl = helpers.getPageContent();
 
-  titleEl.innerHTML = post.title;
-  contentEl.innerHTML = post.content;
+  titleEl.innerHTML = model.getContentTitle( slug );
+  contentEl.innerHTML = model.getContentText( slug );
 
 };
 
@@ -69,11 +71,32 @@ view.buildPost = function( post ) {
   aEl.setAttribute( 'href', '#' + post.slug );
   aEl.appendChild( titleText );
   titleEl.appendChild( aEl );
-  divEl.innerHTML = post.content;
+  divEl.appendChild( document.createTextNode( post.content ) );
   articleEl.appendChild( titleEl );
   articleEl.appendChild( divEl );
 
   return articleEl;
+
+};
+
+
+/**
+ * Create main menu links for pages
+ *
+ */
+view.showMainMenu = function() {
+
+  var pages = model.getContents( 'pages' ),
+      menuFrag = document.createDocumentFragment(),
+      menuEl = helpers.getMainMenu();
+
+  for ( var i = 0, max = pages.length; i < max; i++ ) {
+
+    menuFrag.appendChild( helpers.buildMenuItem( pages[i] ) );
+
+  }
+
+  menuEl.appendChild( menuFrag );
 
 };
 
