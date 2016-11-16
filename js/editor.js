@@ -23,7 +23,7 @@ editor.init = function() {
  */
 editor.listenEditorToggle = function() {
 
-  var editorToggleEl = helpers.getEditorToggle();
+  var editorToggleEl = helpers.getEditorToggleEl();
 
   editorToggleEl.addEventListener( 'click', editor.toggle, false );
 
@@ -35,12 +35,30 @@ editor.listenEditorToggle = function() {
  */
 editor.toggle = function( event ) {
 
-  var editorEl = helpers.getEditor(),
-      editorToggleEl = helpers.getEditorToggle();
+  var editorEl = helpers.getEditorEl(),
+      editorToggleEl = helpers.getEditorToggleEl();
 
   editorEl.classList.toggle( 'hidden' );
   editorToggleEl.classList.toggle( 'hidden' );
 
+  if ( false === editorEl.classList.contains( 'hidden' ) ) {
+
+    editor.loadEditorForm( model.getCurrentContent() );
+
+  }
+
   event.preventDefault();
 
 }
+
+
+editor.loadEditorForm = function( contentObj ) {
+
+  var formTitle = helpers.getEditorTitleEl(),
+      formContent = helpers.getEditorContentEl();
+
+      // console.log(formTitle);
+  formTitle.value = contentObj.title;
+  formContent.value = contentObj.content;
+
+};

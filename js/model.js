@@ -123,6 +123,26 @@ model.getContent = function( slug ) {
 
 
 /**
+ * Get content object of current page
+ *
+ * @return {object} content object - Content object of current page
+ */
+model.getCurrentContent = function() {
+
+  var slug = router.getSlug();
+
+  if ( null === slug ) {
+
+    slug = 'home';
+
+  }
+
+  return model.getContent( slug );
+
+}
+
+
+/**
  * Get content title from slug
  *
  * @param  {string} slug - Content URL slug

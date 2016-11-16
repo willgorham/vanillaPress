@@ -50,7 +50,7 @@ helpers.getMainMenu = function() {
  *
  * @return {object} editor - Editor DOM element
  */
-helpers.getEditor = function() {
+helpers.getEditorEl = function() {
 
   return document.getElementById( 'editor' );
 
@@ -62,9 +62,33 @@ helpers.getEditor = function() {
  *
  * @return {object} editorToggle - Editor toggle DOM element
  */
-helpers.getEditorToggle = function() {
+helpers.getEditorToggleEl = function() {
 
   return document.getElementById( 'editorToggle' );
+
+};
+
+
+/**
+ * Get DOM element containing editor title field
+ *
+ * @return {object} editorTitle - Editor title DOM element
+ */
+helpers.getEditorTitleEl = function() {
+
+  return document.getElementById( 'editTitle' );
+
+};
+
+
+/**
+ * Get DOM element containing editor content field
+ *
+ * @return {object} editorContent - Editor content DOM element
+ */
+helpers.getEditorContentEl = function() {
+
+  return document.getElementById( 'editContent' );
 
 };
 

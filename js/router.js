@@ -27,8 +27,6 @@ router.getSlug = function() {
 
   var slug = window.location.hash;
 
-  view.clearContent();
-
   if ( '' === slug ) {
 
     return null;
@@ -60,6 +58,8 @@ router.listenPageChange = function() {
 router.loadContent = function() {
 
   var slug = router.getSlug();
+
+  view.clearContent();
 
   if ( null === slug ) {
 
