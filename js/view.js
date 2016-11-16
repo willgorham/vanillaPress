@@ -10,6 +10,7 @@ var view = {};
 
 view.init = function() {
 
+  // Initialize main menu
   view.showMainMenu();
 
 };

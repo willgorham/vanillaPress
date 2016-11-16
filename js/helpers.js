@@ -46,6 +46,30 @@ helpers.getMainMenu = function() {
 
 
 /**
+ * Get DOM element containing editor
+ *
+ * @return {object} editor - Editor DOM element
+ */
+helpers.getEditor = function() {
+
+  return document.getElementById( 'editor' );
+
+};
+
+
+/**
+ * Get DOM element containing editor toggle
+ *
+ * @return {object} editorToggle - Editor toggle DOM element
+ */
+helpers.getEditorToggle = function() {
+
+  return document.getElementById( 'editorToggle' );
+
+};
+
+
+/**
  * Create DOM link object
  *
  * @param {string} href - Link location
