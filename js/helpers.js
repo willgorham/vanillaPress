@@ -94,6 +94,18 @@ helpers.getEditorContentEl = function() {
 
 
 /**
+ * Get DOM element containing editor update button
+ *
+ * @return {object} editorUpdateBtn - Editor update button DOM element
+ */
+helpers.getEditorUpdateBtn = function() {
+
+  return document.getElementById( 'editUpdateBtn' );
+
+};
+
+
+/**
  * Create DOM link object
  *
  * @param {string} href - Link location

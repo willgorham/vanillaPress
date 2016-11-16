@@ -11,7 +11,9 @@ var model = {};
 model.init = function() {
 
   // Initialize data in local storage
-  model.setLocalStorage( data );
+  if ( null === model.getLocalStorage() ) {
+    model.setLocalStorage( data );
+  }
 
 };
 
@@ -63,7 +65,7 @@ model.getContentType = function( contentType ) {
 
   return contents;
 
-}
+};
 
 
 /**
@@ -139,7 +141,7 @@ model.getCurrentContent = function() {
 
   return model.getContent( slug );
 
-}
+};
 
 
 /**
@@ -154,7 +156,7 @@ model.getContentTitle = function( slug ) {
 
   return contentObj.title;
 
-}
+};
 
 
 /**
@@ -168,5 +170,42 @@ model.getContentText = function( slug ) {
   var contentObj = model.getContent( slug );
 
   return contentObj.content;
+
+};
+
+
+/**
+ *
+ */
+model.saveContent = function( contentObj ) {
+
+  var data = model.getLocalStorage(),
+      date = new Date();
+
+  if ( 'post' === contentObj.type ) {
+
+    data.posts.forEach( function( post ) {
+      if ( contentObj.id === post.id ) {
+        post.title = contentObj.title;
+        post.content = contentObj.content;
+        post.modified = date.toISOString();
+      }
+    });
+
+  }
+
+  if ( 'page' === contentObj.type ) {
+
+    data.pages.forEach( function( page ) {
+      if ( contentObj.id === page.id ) {
+        page.title = contentObj.title;
+        page.content = contentObj.content;
+        page.modified = date.toISOString();
+      }
+    });
+
+  }
+
+  model.setLocalStorage( data );
 
 }

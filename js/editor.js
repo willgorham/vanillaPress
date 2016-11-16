@@ -6,7 +6,10 @@
  * The main editror object.
  *
  */
-var editor = {};
+var editor = {
+  currentContent: {},
+  unsavedContent: false
+};
 
 /**
  * Initialize the editor object
@@ -41,24 +44,90 @@ editor.toggle = function( event ) {
   editorEl.classList.toggle( 'hidden' );
   editorToggleEl.classList.toggle( 'hidden' );
 
-  if ( false === editorEl.classList.contains( 'hidden' ) ) {
-
-    editor.loadEditorForm( model.getCurrentContent() );
-
-  }
-
   event.preventDefault();
+
+};
+
+
+editor.reset = function() {
+
+  editor.currentContent = model.getCurrentContent();
+  editor.fillEditorForm( editor.currentContent );
+
+};
+
+
+/**
+ * Populate editor form with current page content
+ *
+ * @param  {object} contentObj - Current page object
+ */
+editor.fillEditorForm = function( contentObj ) {
+
+  var editorTitleField = helpers.getEditorTitleEl(),
+      editorContentField = helpers.getEditorContentEl();
+
+  editorTitleField.value = contentObj.title;
+  editorContentField.value = contentObj.content;
+
+  editor.addEditorListeners();
+
+};
+
+
+/**
+ * Add listeners to update page content when editor content is changed
+ */
+editor.addEditorListeners = function() {
+
+  var editorTitleField = helpers.getEditorTitleEl(),
+      editorContentField = helpers.getEditorContentEl(),
+      editorUpdateBtn = helpers.getEditorUpdateBtn();
+
+  editorTitleField.addEventListener(
+    'input',
+    editor.updatePageTitle,
+    false
+  );
+
+  editorContentField.addEventListener(
+    'input',
+    editor.updatePageContent,
+    false
+  );
+
+  editorUpdateBtn.addEventListener(
+    'click',
+    editor.saveContent,
+    false
+  );
+
+};
+
+
+editor.saveContent = function( event ) {
+
+  model.saveContent( editor.currentContent );
+  event.preventDefault();
+
+};
+
+
+editor.updatePageTitle = function() {
+
+  var titleVal = helpers.getEditorTitleEl().value;
+
+  view.updateTitle( titleVal );
+  editor.currentContent.title = titleVal;
 
 }
 
 
-editor.loadEditorForm = function( contentObj ) {
+editor.updatePageContent = function() {
 
-  var formTitle = helpers.getEditorTitleEl(),
-      formContent = helpers.getEditorContentEl();
+  var contentVal = helpers.getEditorContentEl().value;
 
-      // console.log(formTitle);
-  formTitle.value = contentObj.title;
-  formContent.value = contentObj.content;
+  view.updateContent ( contentVal );
+  editor.currentContent.content = contentVal;
 
-};
+}

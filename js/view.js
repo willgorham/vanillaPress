@@ -115,3 +115,27 @@ view.clearContent = function() {
   contentEl.innerHTML = '';
 
 };
+
+
+/**
+ * Set page title equal to editor title field value
+ */
+view.updateTitle = function( title ) {
+
+  var titleEl = helpers.getPageTitle();
+
+  titleEl.innerHTML = title;
+
+};
+
+
+/**
+ * Set page content equal to editor content field value
+ */
+view.updateContent = function( content ) {
+
+  var contentEl = helpers.getPageContent();
+
+  contentEl.innerHTML = content;
+
+};

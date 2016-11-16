@@ -75,4 +75,6 @@ router.loadContent = function() {
 
   }
 
+  editor.reset();
+
 }
