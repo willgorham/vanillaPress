@@ -22,7 +22,7 @@ view.init = function() {
  */
 view.showPosts = function() {
 
-  var posts = model.getContents('posts'),
+  var posts = model.getContentType('posts'),
       postsFrag = document.createDocumentFragment(),
       pageContent = helpers.getPageContent(),
       pageTitle = helpers.getPageTitle();
@@ -87,7 +87,7 @@ view.buildPost = function( post ) {
  */
 view.showMainMenu = function() {
 
-  var pages = model.getContents( 'pages' ),
+  var pages = model.getContentType( 'pages' ),
       menuFrag = document.createDocumentFragment(),
       menuEl = helpers.getMainMenu();
 

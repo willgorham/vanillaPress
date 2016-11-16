@@ -57,24 +57,25 @@ model.removeLocalStorage = function() {
  * @param {string} contentType - Content type to query
  * @return {object[]} contents - Array of all contents of type contentType
  */
-model.getContents = function( contentType ) {
+model.getContentType = function( contentType ) {
 
   var contents = model.getLocalStorage()[contentType];
+
   return contents;
 
 }
 
 
 /**
- * Get single content object from corresponding slug and content type
+ * Get specific content based on slug and type
  *
- * @param  {string} contentType - Content type to query
- * @param  {string} slug - Content slug
- * @return {object} content - Content object
+ * @param  {string} slug - Slug for desired content
+ * @param  {string} contentType - Type of content desired
+ * @return {object} content obj - Content object contating all conetnt info
  */
-model.getContent = function( contentType, slug ) {
+model.getContentByType = function( slug, contentType ) {
 
-  var contents = model.getLocalStorage()[contentType];
+  var contents = model.getContentType( contentType );
 
   for ( var i = 0, max = contents.length; i < max; i++ ) {
 
@@ -90,19 +91,29 @@ model.getContent = function( contentType, slug ) {
 
 };
 
+
 /**
  * Get single content object from corresponding slug
  *
  * @param  {string} slug - Content slug
  * @return {object} content - Content object
  */
-model.getContentBySlug = function( slug ) {
+model.getContent = function( slug ) {
 
-  var contentObj = model.getContent( 'posts', slug );
+  var contentObj = model.getContentByType( slug, 'posts' );
 
   if ( null === contentObj ) {
 
-    contentObj = model.getContent( 'pages', slug );
+    contentObj = model.getContentByType( slug, 'pages' );
+
+  }
+
+  if ( null === contentObj ) {
+
+    contentObj = {
+      title: '404 Error',
+      content: 'Not Found'
+    };
 
   }
 
@@ -119,20 +130,9 @@ model.getContentBySlug = function( slug ) {
  */
 model.getContentTitle = function( slug ) {
 
-  var title,
-      contentObj = model.getContentBySlug( slug );
+  var contentObj = model.getContent( slug );
 
-  if ( null === contentObj ) {
-
-    title = '404 Error';
-
-  } else {
-
-    title = contentObj.title;
-
-  }
-
-  return title;
+  return contentObj.title;
 
 }
 
@@ -145,19 +145,8 @@ model.getContentTitle = function( slug ) {
  */
 model.getContentText = function( slug ) {
 
-  var text,
-      contentObj = model.getContentBySlug( slug );
+  var contentObj = model.getContent( slug );
 
-  if ( null === contentObj ) {
-
-    text = 'Not Found';
-
-  } else {
-
-    text = contentObj.content;
-
-  }
-
-  return text;
+  return contentObj.content;
 
 }
