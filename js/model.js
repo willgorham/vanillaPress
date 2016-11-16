@@ -66,7 +66,7 @@ model.getContents = function( contentType ) {
 
 
 /**
- * Get single content object from corresponding slug
+ * Get single content object from corresponding slug and content type
  *
  * @param  {string} contentType - Content type to query
  * @param  {string} slug - Content slug
@@ -89,3 +89,75 @@ model.getContent = function( contentType, slug ) {
   return null;
 
 };
+
+/**
+ * Get single content object from corresponding slug
+ *
+ * @param  {string} slug - Content slug
+ * @return {object} content - Content object
+ */
+model.getContentBySlug = function( slug ) {
+
+  var contentObj = model.getContent( 'posts', slug );
+
+  if ( null === contentObj ) {
+
+    contentObj = model.getContent( 'pages', slug );
+
+  }
+
+  return contentObj;
+
+};
+
+
+/**
+ * Get content title from slug
+ *
+ * @param  {string} slug - Content URL slug
+ * @return {string} title - Content title
+ */
+model.getContentTitle = function( slug ) {
+
+  var title,
+      contentObj = model.getContentBySlug( slug );
+
+  if ( null === contentObj ) {
+
+    title = '404 Error';
+
+  } else {
+
+    title = contentObj.title;
+
+  }
+
+  return title;
+
+}
+
+
+/**
+ * Get content text from slug
+ *
+ * @param  {string} slug - Content URL slug
+ * @return {string} text - Content body text
+ */
+model.getContentText = function( slug ) {
+
+  var text,
+      contentObj = model.getContentBySlug( slug );
+
+  if ( null === contentObj ) {
+
+    text = 'Not Found';
+
+  } else {
+
+    text = contentObj.content;
+
+  }
+
+  return text;
+
+}

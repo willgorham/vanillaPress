@@ -45,23 +45,11 @@ view.showPosts = function() {
  */
 view.showContent = function( slug ) {
 
-  var contentObj = model.getContent( 'posts', slug ),
-      titleEl = helpers.getPageTitle(),
+  var titleEl = helpers.getPageTitle(),
       contentEl = helpers.getPageContent();
 
-  if ( null === contentObj ) {
-    contentObj = model.getContent( 'pages', slug );
-  }
-
-  if ( null === contentObj ) {
-    contentObj = {
-      title: '404 Error',
-      content: 'Page not found'
-    };
-  }
-
-  titleEl.innerHTML = contentObj.title;
-  contentEl.innerHTML = contentObj.content;
+  titleEl.innerHTML = model.getContentTitle( slug );
+  contentEl.innerHTML = model.getContentText( slug );
 
 };
 
