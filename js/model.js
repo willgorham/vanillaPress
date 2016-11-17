@@ -175,7 +175,9 @@ model.getContentText = function( slug ) {
 
 
 /**
+ * Saves current content to local storage data
  *
+ * @param  {object} contentObj - Current content object
  */
 model.saveContent = function( contentObj ) {
 

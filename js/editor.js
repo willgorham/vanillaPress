@@ -49,6 +49,9 @@ editor.toggle = function( event ) {
 };
 
 
+/**
+ * Reset editor to current page content
+ */
 editor.reset = function() {
 
   editor.currentContent = model.getCurrentContent();
@@ -105,6 +108,11 @@ editor.addEditorListeners = function() {
 };
 
 
+/**
+ * Handle editor Update button click event
+ *
+ * @param  {object} event - Click event
+ */
 editor.saveContent = function( event ) {
 
   model.saveContent( editor.currentContent );
@@ -113,6 +121,9 @@ editor.saveContent = function( event ) {
 };
 
 
+/**
+ * Updates and saves new page title from editor
+ */
 editor.updatePageTitle = function() {
 
   var titleVal = helpers.getEditorTitleEl().value;
@@ -123,6 +134,9 @@ editor.updatePageTitle = function() {
 }
 
 
+/**
+ * Updates and saves new page content from editor
+ */
 editor.updatePageContent = function() {
 
   var contentVal = helpers.getEditorContentEl().value;
