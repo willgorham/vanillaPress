@@ -120,9 +120,10 @@ editor.addEditorListeners = function() {
  */
 editor.saveContent = function( event ) {
 
+  event.preventDefault();
   model.saveContent( editor.currentContent );
   editor.unsavedContent = false;
-  event.preventDefault();
+  editor.animateSaveBtn();
 
 };
 
@@ -155,6 +156,10 @@ editor.updatePageContent = function() {
 }
 
 
+/**
+ * Create unsaved content alert when clicking away from page
+ * @param  {object} event object - Click event object
+ */
 editor.protectUnsavedContent = function( event ) {
 
   if ( true === editor.unsavedContent ) {
@@ -167,5 +172,25 @@ editor.protectUnsavedContent = function( event ) {
     }
 
   }
+
+}
+
+
+/**
+ * Animate editor update button on save
+ */
+editor.animateSaveBtn = function() {
+
+  var btn = helpers.getEditorUpdateBtn(),
+  saved = function() {
+    btn.innerText = 'Update';
+  },
+  saving = function() {
+    btn.innerText = 'Saved';
+    setTimeout(saved, 900);
+  };
+
+  btn.innerText = 'Saving...';
+  setTimeout(saving, 900);
 
 }
