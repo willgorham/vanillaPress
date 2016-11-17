@@ -85,7 +85,8 @@ editor.addEditorListeners = function() {
 
   var editorTitleField = helpers.getEditorTitleEl(),
       editorContentField = helpers.getEditorContentEl(),
-      editorUpdateBtn = helpers.getEditorUpdateBtn();
+      editorUpdateBtn = helpers.getEditorUpdateBtn(),
+      links = document.querySelectorAll( 'a' );
 
   editorTitleField.addEventListener(
     'input',
@@ -105,6 +106,10 @@ editor.addEditorListeners = function() {
     false
   );
 
+  links.forEach( function( link ) {
+    link.addEventListener( 'click', editor.protectUnsavedContent, false );
+  });
+
 };
 
 
@@ -116,6 +121,7 @@ editor.addEditorListeners = function() {
 editor.saveContent = function( event ) {
 
   model.saveContent( editor.currentContent );
+  editor.unsavedContent = false;
   event.preventDefault();
 
 };
@@ -130,6 +136,7 @@ editor.updatePageTitle = function() {
 
   view.updateTitle( titleVal );
   editor.currentContent.title = titleVal;
+  editor.unsavedContent = true;
 
 }
 
@@ -143,5 +150,22 @@ editor.updatePageContent = function() {
 
   view.updateContent ( contentVal );
   editor.currentContent.content = contentVal;
+  editor.unsavedContent = true;
+
+}
+
+
+editor.protectUnsavedContent = function( event ) {
+
+  if ( true === editor.unsavedContent ) {
+    var confirm = window.confirm( 'You have unsaved content' );
+
+    if ( false === confirm ) {
+      event.preventDefault();
+    } else {
+      editor.unsavedContent = false;
+    }
+
+  }
 
 }
