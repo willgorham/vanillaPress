@@ -17,18 +17,30 @@ var editor = {
 editor.init = function() {
 
   editor.listenEditorToggle();
+  editor.setEditorOpen();
 
 };
 
 
 /**
- * Listen for  editor toggle button click
+ * Listen for editor toggle button click
  */
 editor.listenEditorToggle = function() {
 
   var editorToggleEl = helpers.getEditorToggleEl();
 
-  editorToggleEl.addEventListener( 'click', editor.toggle, false );
+  editorToggleEl.addEventListener( 'click', editor.handleEditorToggle, false );
+
+};
+
+
+/**
+ * Handle editor toggle click
+ */
+editor.handleEditorToggle = function( event ) {
+
+  event.preventDefault();
+  editor.toggle();
 
 };
 
@@ -36,15 +48,26 @@ editor.listenEditorToggle = function() {
 /**
  * Toggle editor and etitor toggle button
  */
-editor.toggle = function( event ) {
+editor.toggle = function() {
 
   var editorEl = helpers.getEditorEl(),
-      editorToggleEl = helpers.getEditorToggleEl();
+      editorToggleEl = helpers.getEditorToggleEl(),
+      links = document.querySelectorAll( 'a' );
 
   editorEl.classList.toggle( 'hidden' );
   editorToggleEl.classList.toggle( 'hidden' );
 
-  event.preventDefault();
+  if ( editorEl.classList.contains( 'hidden' ) ) {
+    model.setEditorOpen( false );
+    editor.unsavedContent = false;
+    links.forEach( function( link ) {
+      link.removeEventListener( 'click', editor.protectUnsavedContent, false );
+    });
+  } else {
+    model.setEditorOpen( true );
+    editor.currentContent = model.getCurrentContent();
+    editor.fillEditorForm( editor.currentContent );
+  }
 
 };
 
@@ -192,5 +215,14 @@ editor.animateSaveBtn = function() {
 
   btn.innerText = 'Saving...';
   setTimeout(saving, 900);
+
+}
+
+
+editor.setEditorOpen = function() {
+
+  if ( model.isEditorOpen() ) {
+    editor.toggle();
+  }
 
 }

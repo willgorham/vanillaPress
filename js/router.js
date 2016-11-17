@@ -57,7 +57,8 @@ router.listenPageChange = function() {
  */
 router.loadContent = function() {
 
-  var slug = router.getSlug();
+  var slug = router.getSlug(),
+      editorEl = helpers.getEditorEl();
 
   view.clearContent();
 
@@ -75,6 +76,10 @@ router.loadContent = function() {
 
   }
 
-  editor.reset();
+  editor.currentContent = model.getCurrentContent();
+
+  if ( ! editorEl.classList.contains( 'hidden' ) ) {
+    editor.fillEditorForm( editor.currentContent );
+  }
 
 }

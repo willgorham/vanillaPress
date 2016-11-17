@@ -54,6 +54,33 @@ model.removeLocalStorage = function() {
 
 
 /**
+ * Check whether the editor is open
+ */
+model.isEditorOpen = function() {
+
+  var data = model.getLocalStorage();
+  return data.settings.editorOpen;
+
+}
+
+
+/**
+ * Set the open/closed state of the editor
+ *
+ * @param {Boolean} isOpen - Is the editor open
+ */
+model.setEditorOpen = function( isOpen ) {
+
+  var data = model.getLocalStorage();
+
+  data.settings.editorOpen = isOpen;
+
+  model.setLocalStorage( data );
+
+}
+
+
+/**
  * Get all content of designated type from local storage
  *
  * @param {string} contentType - Content type to query
