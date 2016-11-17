@@ -11,7 +11,9 @@ var model = {};
 model.init = function() {
 
   // Initialize data in local storage
-  model.setLocalStorage( data );
+  if ( null === model.getLocalStorage() ) {
+    model.setLocalStorage( data );
+  }
 
 };
 
@@ -52,29 +54,57 @@ model.removeLocalStorage = function() {
 
 
 /**
- * Get all content of designated type from local storage
- *
- * @param {string} contentType - Content type to query
- * @return {object[]} contents - Array of all contents of type contentType
+ * Check whether the editor is open
  */
-model.getContents = function( contentType ) {
+model.isEditorOpen = function() {
 
-  var contents = model.getLocalStorage()[contentType];
-  return contents;
+  var data = model.getLocalStorage();
+  return data.settings.editorOpen;
 
 }
 
 
 /**
- * Get single content object from corresponding slug and content type
+ * Set the open/closed state of the editor
  *
- * @param  {string} contentType - Content type to query
- * @param  {string} slug - Content slug
- * @return {object} content - Content object
+ * @param {Boolean} isOpen - Is the editor open
  */
-model.getContent = function( contentType, slug ) {
+model.setEditorOpen = function( isOpen ) {
+
+  var data = model.getLocalStorage();
+
+  data.settings.editorOpen = isOpen;
+
+  model.setLocalStorage( data );
+
+}
+
+
+/**
+ * Get all content of designated type from local storage
+ *
+ * @param {string} contentType - Content type to query
+ * @return {object[]} contents - Array of all contents of type contentType
+ */
+model.getContentType = function( contentType ) {
 
   var contents = model.getLocalStorage()[contentType];
+
+  return contents;
+
+};
+
+
+/**
+ * Get specific content based on slug and type
+ *
+ * @param  {string} slug - Slug for desired content
+ * @param  {string} contentType - Type of content desired
+ * @return {object} content obj - Content object contating all conetnt info
+ */
+model.getContentByType = function( slug, contentType ) {
+
+  var contents = model.getContentType( contentType );
 
   for ( var i = 0, max = contents.length; i < max; i++ ) {
 
@@ -90,23 +120,53 @@ model.getContent = function( contentType, slug ) {
 
 };
 
+
 /**
  * Get single content object from corresponding slug
  *
  * @param  {string} slug - Content slug
  * @return {object} content - Content object
  */
-model.getContentBySlug = function( slug ) {
+model.getContent = function( slug ) {
 
-  var contentObj = model.getContent( 'posts', slug );
+  var contentObj = model.getContentByType( slug, 'posts' );
 
   if ( null === contentObj ) {
 
-    contentObj = model.getContent( 'pages', slug );
+    contentObj = model.getContentByType( slug, 'pages' );
+
+  }
+
+  if ( null === contentObj ) {
+
+    contentObj = {
+      title: '404 Error',
+      content: 'Not Found'
+    };
 
   }
 
   return contentObj;
+
+};
+
+
+/**
+ * Get content object of current page
+ *
+ * @return {object} content object - Content object of current page
+ */
+model.getCurrentContent = function() {
+
+  var slug = router.getSlug();
+
+  if ( null === slug ) {
+
+    slug = 'home';
+
+  }
+
+  return model.getContent( slug );
 
 };
 
@@ -119,22 +179,11 @@ model.getContentBySlug = function( slug ) {
  */
 model.getContentTitle = function( slug ) {
 
-  var title,
-      contentObj = model.getContentBySlug( slug );
+  var contentObj = model.getContent( slug );
 
-  if ( null === contentObj ) {
+  return contentObj.title;
 
-    title = '404 Error';
-
-  } else {
-
-    title = contentObj.title;
-
-  }
-
-  return title;
-
-}
+};
 
 
 /**
@@ -145,19 +194,47 @@ model.getContentTitle = function( slug ) {
  */
 model.getContentText = function( slug ) {
 
-  var text,
-      contentObj = model.getContentBySlug( slug );
+  var contentObj = model.getContent( slug );
 
-  if ( null === contentObj ) {
+  return contentObj.content;
 
-    text = 'Not Found';
+};
 
-  } else {
 
-    text = contentObj.content;
+/**
+ * Saves current content to local storage data
+ *
+ * @param  {object} contentObj - Current content object
+ */
+model.saveContent = function( contentObj ) {
+
+  var data = model.getLocalStorage(),
+      date = new Date();
+
+  if ( 'post' === contentObj.type ) {
+
+    data.posts.forEach( function( post ) {
+      if ( contentObj.id === post.id ) {
+        post.title = contentObj.title;
+        post.content = contentObj.content;
+        post.modified = date.toISOString();
+      }
+    });
 
   }
 
-  return text;
+  if ( 'page' === contentObj.type ) {
+
+    data.pages.forEach( function( page ) {
+      if ( contentObj.id === page.id ) {
+        page.title = contentObj.title;
+        page.content = contentObj.content;
+        page.modified = date.toISOString();
+      }
+    });
+
+  }
+
+  model.setLocalStorage( data );
 
 }

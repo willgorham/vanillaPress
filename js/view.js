@@ -10,6 +10,7 @@ var view = {};
 
 view.init = function() {
 
+  // Initialize main menu
   view.showMainMenu();
 
 };
@@ -21,7 +22,7 @@ view.init = function() {
  */
 view.showPosts = function() {
 
-  var posts = model.getContents('posts'),
+  var posts = model.getContentType('posts'),
       postsFrag = document.createDocumentFragment(),
       pageContent = helpers.getPageContent(),
       pageTitle = helpers.getPageTitle();
@@ -86,7 +87,7 @@ view.buildPost = function( post ) {
  */
 view.showMainMenu = function() {
 
-  var pages = model.getContents( 'pages' ),
+  var pages = model.getContentType( 'pages' ),
       menuFrag = document.createDocumentFragment(),
       menuEl = helpers.getMainMenu();
 
@@ -112,5 +113,29 @@ view.clearContent = function() {
 
   titleEl.innerHTML = '';
   contentEl.innerHTML = '';
+
+};
+
+
+/**
+ * Set page title equal to editor title field value
+ */
+view.updateTitle = function( title ) {
+
+  var titleEl = helpers.getPageTitle();
+
+  titleEl.innerHTML = title;
+
+};
+
+
+/**
+ * Set page content equal to editor content field value
+ */
+view.updateContent = function( content ) {
+
+  var contentEl = helpers.getPageContent();
+
+  contentEl.innerHTML = content;
 
 };

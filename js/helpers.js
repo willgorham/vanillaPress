@@ -46,6 +46,66 @@ helpers.getMainMenu = function() {
 
 
 /**
+ * Get DOM element containing editor
+ *
+ * @return {object} editor - Editor DOM element
+ */
+helpers.getEditorEl = function() {
+
+  return document.getElementById( 'editor' );
+
+};
+
+
+/**
+ * Get DOM element containing editor toggle
+ *
+ * @return {object} editorToggle - Editor toggle DOM element
+ */
+helpers.getEditorToggleEl = function() {
+
+  return document.getElementById( 'editorToggle' );
+
+};
+
+
+/**
+ * Get DOM element containing editor title field
+ *
+ * @return {object} editorTitle - Editor title DOM element
+ */
+helpers.getEditorTitleEl = function() {
+
+  return document.getElementById( 'editTitle' );
+
+};
+
+
+/**
+ * Get DOM element containing editor content field
+ *
+ * @return {object} editorContent - Editor content DOM element
+ */
+helpers.getEditorContentEl = function() {
+
+  return document.getElementById( 'editContent' );
+
+};
+
+
+/**
+ * Get DOM element containing editor update button
+ *
+ * @return {object} editorUpdateBtn - Editor update button DOM element
+ */
+helpers.getEditorUpdateBtn = function() {
+
+  return document.getElementById( 'editUpdateBtn' );
+
+};
+
+
+/**
  * Create DOM link object
  *
  * @param {string} href - Link location
